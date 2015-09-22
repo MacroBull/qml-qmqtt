@@ -30,18 +30,19 @@ def on_message(client, userdata, msg):
 
 def act(s):
 	s = 1 if s else 0
-	sender.publish("miso", "ACK")
+	sender.publish("miso", "ACK", qos=1)
 	if not mock:
 		q = s
 		while s==q:
 			G.output(23,s)
 			q = G.input(24)
+			print(s,q)
 			s = 1-q
-	sender.publish("miso", s)
+	sender.publish("miso", s, qos=1)
 
 receiver = mqtt.Client()
 sender = mqtt.Client()
-receiver.on_connect = lambda client, userdata, flags, rc:client.subscribe("mosi")
+receiver.on_connect = lambda client, userdata, flags, rc:client.subscribe("mosi", qos=1)
 receiver.on_message = on_message
 
 receiver.connect(server, 1883, 60)

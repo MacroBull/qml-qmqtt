@@ -1,6 +1,7 @@
 TEMPLATE = lib
 TARGET = MqttClient
-QT += qml quick
+QT += qml
+QT -= gui
 CONFIG += qt plugin
 
 TARGET = $$qtLibraryTarget($$TARGET)

@@ -18,7 +18,8 @@ ApplicationWindow {
 	property int s;
 	property var st;
 	property bool pending:false;
-	property var server: "localhost";
+	property var server
+		: "localhost";
 
 	function time(){
 		return new Date().getTime();
@@ -29,6 +30,7 @@ ApplicationWindow {
 		host: server
 		topic: "miso"
 		qos: 1
+		autorc:true
 		onMessageReceived: {
 			var d
 			if (message == "ACK") {
@@ -67,11 +69,9 @@ ApplicationWindow {
 	MqttClient {
 		id: sender
 		host: server
+		autorc:true
 		qos: 1
 		topic: "mosi"
-		onDisconnected: {
-			sender.connect();
-		}
 	}
 
 	initialPage: InitialPage {
